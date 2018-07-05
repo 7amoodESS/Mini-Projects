@@ -1,19 +1,21 @@
-<?php 
+<html>
+</html>
+<?php
 	class CurrencyConverter implements CurrencyConverterInterface
 	{
-		
+
 		// Variables
 
 		protected $currencyURL = 'http://www.freecurrencyconverterapi.com/api/v2';
 
 		protected $convertEndPoint = 'convert?q=%s&compact=y';
-		
+
 		protected $currenciesEndPoint = 'currencies';
 
 		//Functions
-		
+
 		public function convert(array $conversions){
-			
+
 			$currencies = [];
 			$results = [];
 
@@ -26,7 +28,7 @@
 			// Build Up URL
 			$convertEndPoint = sprintf($this->convertEndPoint, $query);
 			$url = "{$this->currencyURL}/{$convertEndPoint}";
-		
+
 			// Get response
 			$response = json_decode($this->curlRequest($url), true);
 
@@ -41,7 +43,7 @@
 
 		public function getCurrencies(){
 			$url = "{$this->currencyURL}/{$this->currenciesEndPoint}";
-		
+
 			return json_decode($this->curlRequest($url), true)['results'];
 		}
 
@@ -49,7 +51,7 @@
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_URL,$url);
-		
+
 			return curl_exec($curl);
 		}
 	}
